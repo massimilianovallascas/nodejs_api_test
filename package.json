@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "test": "mocha --reporter dot --exit",
-    "coverage": "nyc --reporter cobertura --reporter text npm test"
+    "coverage": "nyc --reporter lcov --reporter text-summary npm test"
   },
   "engines": {
     "node": "^12.14.1"
