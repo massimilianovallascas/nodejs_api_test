@@ -1,0 +1,39 @@
+version: '3'
+
+services:
+  node:
+    build:
+      context: dockerfile
+      dockerfile: Dockerfile-node
+    command: bash -c "cd /var/www && npm install && npm test && npm run coverage && npm start"
+    container_name: nodejs_api-node
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_DATABASE: nodejsapi
+      MYSQL_USER: nodejsapi
+      MYSQL_PASSWORD: nodejsapi
+      MYSQL_HOST: mysql
+    image: nodejs_api-node
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/var/www
+    working_dir: /var/www
+
+  mysql:
+    build:
+      context: dockerfile
+      dockerfile: Dockerfile-mysql
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: nodejs_api-mysql
+    environment:
+      MYSQL_DATABASE: nodejsapi
+      MYSQL_USER: nodejsapi
+      MYSQL_PASSWORD: nodejsapi
+      MYSQL_ROOT_PASSWORD: password
+    image: nodejs_api-mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
