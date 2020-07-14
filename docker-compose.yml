@@ -16,7 +16,7 @@ services:
       MYSQL_HOST: mysql
     image: nodejs_api-node
     ports:
-      - "3000:3000"
+      - "3001:3000"
     volumes:
       - ./:/var/www
     working_dir: /var/www
@@ -34,6 +34,6 @@ services:
       MYSQL_ROOT_PASSWORD: password
     image: nodejs_api-mysql
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./data:/var/lib/mysql
