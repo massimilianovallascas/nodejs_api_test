@@ -1,1 +1,7 @@
 FROM node:latest
+
+RUN apt-get -q update && apt-get -qy install netcat
+
+#Install the wait-for utility so we can wait for the MYSQL Container to be up
+ADD https://raw.githubusercontent.com/eficode/wait-for/master/wait-for /wait-for
+RUN chmod +x /wait-for
