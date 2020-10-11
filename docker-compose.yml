@@ -5,7 +5,7 @@ services:
     build:
       context: dockerfile
       dockerfile: Dockerfile-node
-    command: bash -c "cd /var/www && npm install && npm test && npm run coverage && npm start"
+    command: bash -c "/wait-for nodejs_api-mysql:3306 -- npm install && npm test && npm run coverage && npm start"
     container_name: nodejs_api-node
     depends_on:
       - mysql
@@ -15,8 +15,8 @@ services:
       MYSQL_PASSWORD: nodejsapi
       MYSQL_HOST: mysql
     image: nodejs_api-node
-    ports:
-      - "3000:3000"
+    expose:
+      - "3000"
     volumes:
       - ./:/var/www
     working_dir: /var/www
@@ -33,7 +33,7 @@ services:
       MYSQL_PASSWORD: nodejsapi
       MYSQL_ROOT_PASSWORD: password
     image: nodejs_api-mysql
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     volumes:
       - ./data:/var/lib/mysql
